@@ -1,11 +1,10 @@
 import connect from '../../config/DB.js';
-
-
 class BaseRepo {
     constructor(model) {
         this.model = model;
         connect();
-        
+    }
+    async getAll(query) {
     }
     async getAll(query) {
         return this.model.find({}).exec();
@@ -46,7 +45,7 @@ async update(id, data) {
     }
 }
 
-
+}
 
 }
 export default BaseRepo; 
