@@ -8,7 +8,7 @@ class BaseController {
     async getAll(req, res, next) {
         try {
             const response = await this.servise.getAll(req.query);
-            if (res.statusCode === 200) {
+            if (res.statusCode === 200) {// גיטי טוענת שצריך להריד את ה if
                 return res.status(200).json(response);
             }
             throw new Error("There is no data for this request");

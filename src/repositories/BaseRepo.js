@@ -4,8 +4,7 @@ class BaseRepo {
         this.model = model;
         connect();
     }
-    async getAll(query) {
-    }
+    
     async getAll(query) {
         return this.model.find({}).exec();
     }
@@ -17,7 +16,7 @@ class BaseRepo {
                 error.code = 404;
                 throw error;
         }
-        return new HttpResponse(item);
+        return item;
     }
     catch(errors){
         throw(errors);
@@ -27,7 +26,7 @@ async insert(data) {
     try {
         let item = await this.model.create(data);
         if (item) {
-            return new HttpResponse(item);
+            return item;
         } else {
             throw new Error('Something wrong happened');
         }
@@ -39,7 +38,7 @@ async insert(data) {
 async update(id, data) {
     try {
         let item = await this.model.findByIdAndUpdate(id, data, { new: true });
-        return new HttpResponse(item);
+        return item;
     } catch (errors) {
         throw errors;
     }
@@ -47,5 +46,5 @@ async update(id, data) {
 
 }
 
-}
+
 export default BaseRepo; 

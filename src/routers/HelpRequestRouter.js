@@ -4,8 +4,8 @@ const router = express.router();
 
 import controller from './controllers/HelpRequestController';
 
-router.get('/', controller.getAll);
 router.get('/:id', controller.getById);
-//router.put('/:id', controller.update);
+router.get('/', controller.getAll);
+router.put('/:id', controller.update);
 
 export default router;
