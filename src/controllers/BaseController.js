@@ -1,4 +1,4 @@
-import autoBind from 'autoBind';
+import autoBind from 'auto-bind';
 
 class BaseController {
     constructor(servise) {
@@ -8,11 +8,9 @@ class BaseController {
     async getAll(req, res, next) {
         try {
             const response = await this.servise.getAll(req.query);
-            if (res.statusCode === 200) {// גיטי טוענת שצריך להריד את ה if
-                return res.status(200).json(response);
-            }
-            throw new Error("There is no data for this request");
-        } catch (e) {
+            return res.status(200).json(response);
+        }
+        catch (e) {
             next(e);
         }
     }
@@ -29,8 +27,8 @@ class BaseController {
             next(e);
         }
     }
-    
-    
-   
+
+
+
 }
 export default BaseController;

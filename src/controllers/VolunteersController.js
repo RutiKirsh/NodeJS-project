@@ -1,11 +1,11 @@
-import BaseController from "./BaseController";
+import BaseController from "./BaseController.js";
 
 class VolunteersController extends BaseController {
-constructor(servise){
-    super(servise);
-}
+    constructor(servise) {
+        super(servise);
+    }
 
-    
+
     async insert(req, res, next) {
         try {
             const response = await this.servise.insert(req.body);

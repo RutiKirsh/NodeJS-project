@@ -11,10 +11,5 @@ export default async function connect(){
     catch(err){
         console.log(err);
     }
-    //לא הבנו
-    // const db = mongoose.connection();
-    // db.on('error', console.error.bind(console, 'connection error:'));
-    // db.once('open', function() {
-    //     console.log('Connected to DB');
-    // });
+
 }

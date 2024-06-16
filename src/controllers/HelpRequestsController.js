@@ -1,9 +1,9 @@
-import BaseController from './BaseController';
-import service from '../services/HelpRequestService';
+import BaseController from './BaseController.js';
+import service from '../services/HelpRequestService.js';
 
 
 class HelpRequestController extends BaseController {
-    constructor(service){
+    constructor(service) {
         super(service);
     }
     async update(req, res, next) {
