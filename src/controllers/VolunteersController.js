@@ -1,14 +1,14 @@
 import BaseController from "./BaseController.js";
-
+import service from '../services/VolunteersService.js';
 class VolunteersController extends BaseController {
-    constructor(servise) {
-        super(servise);
+    constructor(service) {
+        super(service);
     }
 
 
     async insert(req, res, next) {
         try {
-            const response = await this.servise.insert(req.body);
+            const response = await this.service.insert(req.body);
             return res.status(response.statusCode).json(response);
         }
         catch (e) {
@@ -16,4 +16,4 @@ class VolunteersController extends BaseController {
         }
     }
 }
-export default new VolunteersController(services);
+export default new VolunteersController(service);

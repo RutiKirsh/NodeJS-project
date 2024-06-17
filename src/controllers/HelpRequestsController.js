@@ -3,10 +3,10 @@ import service from '../services/HelpRequestService.js';
 
 
 class HelpRequestController extends BaseController {
-    constructor(service) {
+        constructor(service) {
         super(service);
     }
-    async update(req, res, next) {
+        async update(req, res, next) {
         const { id } = req.params;
         try {
             const response = await this.service.update(id, req.body);
@@ -17,5 +17,5 @@ class HelpRequestController extends BaseController {
         }
     }
 }
-//add update
+
 export default new HelpRequestController(service);

@@ -1,9 +1,9 @@
 import express from 'express';
-import controller from '../controllers/VolunteersController.js';
+import volunteerController from '../controllers/VolunteersController.js';
 
-const router = express.router();
-router.get('/', controller.getAll);
-router.get('/:id', controller.getById)
-router.post('/', controller.insert)
+const router = express.Router();
+router.get('/', volunteerController.getAll);
+router.get('/:id', volunteerController.getById)
+router.post('/', volunteerController.insert)
 
 export default router;

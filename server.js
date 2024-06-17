@@ -6,7 +6,7 @@ import HelpRequestRouter from './src/routers/HelpRequestRouter.js';
 configDotenv();
 const server = express();
 const hostname = process.env.HOST_NAME;
-const port = process.env.PORT;
+const port = process.env.PORT||3001;
 
 server.use(express.json());
 

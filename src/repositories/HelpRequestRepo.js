@@ -1,16 +1,37 @@
 import connect from '../../config/DB.js';
+import model from '../models/HelpRequestModel.js';
 
 
 class HelpRequestRepo {
 
-    constructor(mode) {
+    constructor(model) {
         this.model = model;
         connect();
     }
+    // async getAll() {
+    //     try {
+    //       const results = await this.model.aggregate([
+    //         { $match: { status: "W" } }
+    //       ]).exec();
+    //       return results;
+    //     } catch (error) {
+    //       console.error('Error fetching data:', error);
+    //       throw error;
+    //     }
+    //   }
     async getAll() {
-        return this.model.find({ status: 'W' }).exec();
+        try {
+          const results = await this.model.aggregate([
+            { $match: { status: "W" } }
+          ]).exec();
+          console.log(`result ${results}`);
+          return results;
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          throw error;
+        }
+      }
 
-    }
     async getById(id) {
         try {
             let item = await this.model.findById(id);
@@ -25,6 +46,10 @@ class HelpRequestRepo {
             throw (errors);
         }
     }
+    async update(id, item) {
+        
+    }
+
 }
 
 export default new HelpRequestRepo(model);

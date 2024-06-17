@@ -1,4 +1,5 @@
 import connect from '../../config/DB.js';
+import model from '../models/VolunteersModel.js';
 
 class VolunteersRepo {
     constructor(model) {
@@ -39,10 +40,7 @@ class VolunteersRepo {
         }
 
     }
-    async update(id, item) {
-        
-    }
-
+    
 
 }
 export default new VolunteersRepo(model);

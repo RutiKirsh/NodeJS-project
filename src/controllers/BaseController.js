@@ -1,13 +1,14 @@
 import autoBind from 'auto-bind';
 
+
 class BaseController {
-    constructor(servise) {
-        this.servise = servise;
+    constructor(service) {
+        this.service = service;
         autoBind(this);
     }
     async getAll(req, res, next) {
         try {
-            const response = await this.servise.getAll(req.query);
+            const response = await this.service.getAll(req.query);
             return res.status(200).json(response);
         }
         catch (e) {
@@ -17,11 +18,9 @@ class BaseController {
     async getById(req, res, next) {
         const { id } = req.params;
         try {
-            const response = await this.servise.getById(id);
-            if (res.statusCode === 200) {
-                return res.status(200).json(response);
-            }
-            throw new Error("There is no data for this request");
+            const response = await this.service.getById(id);
+            return res.status(200).json(response);
+
         }
         catch (e) {
             next(e);
