@@ -8,8 +8,8 @@ class BaseService{
     async getById(id){
         return await this.repo.getById(id);
     }
-    async create(data){
-        return await this.repo.create(data);
+    async add(data){
+        return await this.repo.add(data);
     }
     async update(id, data){
         return await this.repo.update(id, data);

@@ -24,7 +24,6 @@ class HelpRequestRepo {
           const results = await this.model.aggregate([
             { $match: { status: "W" } }
           ]).exec();
-          console.log(`result ${results}`);
           return results;
         } catch (error) {
           console.error('Error fetching data:', error);

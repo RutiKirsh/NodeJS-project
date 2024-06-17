@@ -26,7 +26,7 @@ class VolunteersRepo {
     }
     async add(item) {
         try{
-            let vol = await this.model.insert(item);
+            let vol = await this.model.create(item);
             if(vol){
                 console.log(vol);
                 return vol;

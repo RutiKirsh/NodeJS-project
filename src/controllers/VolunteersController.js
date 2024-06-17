@@ -4,11 +4,11 @@ class VolunteersController extends BaseController {
     constructor(service) {
         super(service);
     }
+   
 
-
-    async insert(req, res, next) {
+    async add(req, res, next) {
         try {
-            const response = await this.service.insert(req.body);
+            const response = await this.service.add(req.body);
             return res.status(response.statusCode).json(response);
         }
         catch (e) {
