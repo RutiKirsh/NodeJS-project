@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const helpRequestSchema = new Schema({
+    _id:Number,
     location: String,
     description: String,
     contactNumber: String,
@@ -10,5 +11,5 @@ const helpRequestSchema = new Schema({
     importance: String,
     volunteerId: String
 });
-const helpRequestModel = mongoose.model('helpRequests', helpRequestSchema);
+const helpRequestModel = mongoose.model('helpRequests', helpRequestSchema, 'helpRequest');
 export default helpRequestModel;

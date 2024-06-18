@@ -25,22 +25,14 @@ class VolunteersRepo {
         }
     }
     async add(item) {
-        try{
+        try {
             let vol = await this.model.create(item);
-            if(vol){
-                console.log(vol);
-                return vol;
-            }
-            else{
-                throw new Error('there is no data for this request');
-            }
+            console.log(vol);
+            return vol;
         }
         catch (errors) {
             throw (errors);
         }
-
     }
-    
-
 }
 export default new VolunteersRepo(model);

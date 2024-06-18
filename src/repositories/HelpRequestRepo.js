@@ -1,5 +1,6 @@
 import connect from '../../config/DB.js';
 import model from '../models/HelpRequestModel.js';
+import myPipeline from '../repositories/myPipeline.js';
 
 
 class HelpRequestRepo {
@@ -8,23 +9,76 @@ class HelpRequestRepo {
         this.model = model;
         connect();
     }
-    // async getAll() {
-    //     try {
-    //       const results = await this.model.aggregate([
-    //         { $match: { status: "W" } }
-    //       ]).exec();
-    //       return results;
-    //     } catch (error) {
-    //       console.error('Error fetching data:', error);
-    //       throw error;
-    //     }
-    //   }
-    async getAll() {
+    async getAll(filters) {
         try {
-          const results = await this.model.aggregate([
-            { $match: { status: "W" } }
-          ]).exec();
-          return results;
+          let query = {};
+          if(filters.location){
+              query.location = parseInt(filters.location);
+          }
+          if(filters.status){
+              query.status = filters.status;
+          }
+          if(filters.importance){
+              query.importance = filters.importance;
+          }
+          const ourPipeline = [
+            {
+              '$lookup': {
+                'from': 'location',
+                'localField': 'location',
+                'foreignField': '_id',
+                'as': 'location_info'
+              }
+            }, {
+              '$lookup': {
+                'from': 'status',
+                'localField': 'status',
+                'foreignField': '_id',
+                'as': 'status_info'
+              }
+            }, {
+              '$lookup': {
+                'from': 'priority',
+                'localField': 'importance',
+                'foreignField': '_id',
+                'as': 'priority_info'
+              }
+            }, {
+              '$unwind': {
+                'path': '$location_info'
+              }
+            }, {
+              '$unwind': {
+                'path': '$status_info'
+              }
+            }, {
+              '$unwind': {
+                'path': '$priority_info'
+              }
+            }, {
+              '$addFields': {
+                'city': '$location_info.city',
+                'street': '$location_info.street',
+                'importance': '$priority_info.description',
+                'status': '$status_info.description'
+              }
+            }, {
+              '$project': {
+                'location': 0,
+                'location_info': 0,
+                'status_info': 0,
+                'priority_info': 0
+              }
+            }
+          ]
+          console.log(query);
+          const pipeline = [];
+          pipeline.push({ $match: { status: "waiting" }})
+          Object.keys(query).length > 0?pipeline.push([{ $match: query }, {$match: {status:'waiting'}}]) : pipeline.push({ $match: { status: "waiting" }})
+          const results1 =  await this.model.aggregate(ourPipeline).exec();
+          const results2 =  await this.model.aggregate(pipeline).exec();
+          const combinedResults = [...results1, ...results2];
+          return combinedResults;
         } catch (error) {
           console.error('Error fetching data:', error);
           throw error;
@@ -33,7 +87,7 @@ class HelpRequestRepo {
 
     async getById(id) {
         try {
-            let item = await this.model.findById(id);
+            let item = await this.model.findById(Number(id));
             if (!item) {
                 let error = new Error('There is no data for this request');
                 error.code = 404;
@@ -46,9 +100,19 @@ class HelpRequestRepo {
         }
     }
     async update(id, item) {
+      try{
+        let result = await this.model.findByIdAndUpdate(Number(id), item);
+        return result;
+        }
+        catch (errors) {
+          throw new Error('it is not possible to update, please try again');
+        }
+      }
+
+      
         
     }
 
-}
+
 
 export default new HelpRequestRepo(model);

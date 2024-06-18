@@ -7,6 +7,7 @@ const volunteersSchema = new Schema({
     lastName: String,
     phoneNumber: String,
     areasOfHelp: Array  
-});
+}, { versionKey: false }
+);
 const volunteersModel = mongoose.model('volunteers', volunteersSchema);
 export default volunteersModel;
